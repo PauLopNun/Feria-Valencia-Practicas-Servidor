@@ -1,0 +1,38 @@
+# Archivos generados de MJML
+dist/
+*.html
+
+# Archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Configuración de entornos
+.env
+.env.*  # por si usas .env.local, .env.production, etc.
+
+# Editor
+.vscode/
+
+# Dependencias de Node.js
+node_modules/
+
+# Archivos temporales o de backup
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Caché de herramientas de desarrollo
+.cache/
+
+# Archivos generados por Docker (opcional, por si los tienes)
+*.pid
+*.sock
+docker-compose.override.yml

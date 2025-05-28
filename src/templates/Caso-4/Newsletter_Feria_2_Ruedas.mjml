@@ -1,0 +1,212 @@
+<mjml>
+  <mj-head>
+    <!-- Estilos globales y media queries para responsividad -->
+    <mj-style inline="inline">
+      a {
+        color: #bbbbbb;
+      }
+
+      @media only screen and (max-width: 480px) {
+        .responsive-title {
+          font-size: 18px !important;
+        }
+        .responsive-text {
+          font-size: 13px !important;
+          line-height: 20px !important;
+        }
+        .responsive-column {
+          width: 100% !important;
+          display: block !important;
+        }
+      }
+
+      @media only screen and (min-width: 481px) and (max-width: 768px) {
+        .responsive-title {
+          font-size: 20px !important;
+        }
+        .responsive-text {
+          font-size: 14px !important;
+          line-height: 21px !important;
+        }
+      }
+
+      @media only screen and (min-width: 769px) {
+        .responsive-title {
+          font-size: 22px !important;
+        }
+        .responsive-text {
+          font-size: 15px !important;
+          line-height: 22px !important;
+        }
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#1e1e1e">
+
+    <!-- LOGO -->
+    <mj-section>
+      <mj-column>
+        <mj-image alt="Logo Feria Dos Ruedas" src="https://dosruedas.feriavalencia.com/wp-content/uploads/2022/03/cropped-Logo_2RUEDAS_2022_150ppp-1.png" width="80px" padding="16px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Encabezado con título -->
+    <mj-section background-color="#111111" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" line-height="0px" font-weight="bold" align="center" color="#bbbbbb">
+          <span style="text-transform: uppercase;"><singleline>Feria Dos Ruedas</singleline></span>
+        </mj-text>
+        <mj-divider border-color="#e50914" border-width="2px" width="150px"></mj-divider>
+      </mj-column>
+    </mj-section>
+
+    <!-- Texto de bienvenida con nombre personalizado -->
+    <mj-section background-color="#111111" padding="0px">
+      <mj-column>
+        <mj-text align="center" font-size="14px" line-height="22px" font-weight="300" padding="0px 25px" color="#bbbbbb" css-class="responsive-text">
+          Hola <strong>{{nombre}}</strong>, gracias por tu interés en la Feria Dos Ruedas.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Sección principal con título y descripción -->
+    <mj-section background-color="#111111">
+      <mj-column width="100%">
+        <mj-text font-size="20px" font-weight="bold" padding="0px 25px" color="#e50914" css-class="responsive-title">
+          ¡Bienvenido al boletín oficial de la Feria Dos Ruedas!
+        </mj-text>
+        <mj-text font-size="14px" font-weight="300" padding="0px 25px" color="#bbbbbb" css-class="responsive-text">
+          Explora las novedades, marcas destacadas y ofertas exclusivas que encontrarás en la mayor feria de motos del país.
+        </mj-text>
+      </mj-column>
+
+      <!-- Grupo de imágenes lado a lado -->
+      <mj-group width="100%">
+        <mj-column css-class="responsive-column">
+          <mj-image border-radius="3%" alt="Moto deportiva" src="https://practicas.feriavalencia.com/wp-content/uploads/2025/05/img1_2ruedas1.jpg" padding="16px" />
+        </mj-column>
+        <mj-column css-class="responsive-column">
+          <mj-image border-radius="3%" alt="Stand Feria" src="https://practicas.feriavalencia.com/wp-content/uploads/2025/05/img2_2ruedas1.jpg" padding="16px" />
+        </mj-column>
+      </mj-group>
+    </mj-section>
+
+    <!-- Separadores -->
+    <mj-section padding="0px">
+      <mj-column>
+        <mj-divider border-color="#1c1c1c" border-width="2px" width="99%" padding="0px"></mj-divider>
+        <mj-divider border-color="#000000" border-width="2px"></mj-divider>
+      </mj-column>
+    </mj-section>
+
+    <!-- Actividades destacadas -->
+    <mj-section background-color="#111111">
+      <mj-column>
+        <mj-text font-size="22px" color="#e50914" font-weight="bold" align="right" css-class="responsive-title">
+          <singleline>Actividades Destacadas</singleline>
+        </mj-text>
+        <mj-text font-size="14px" font-weight="300" padding="0px 25px" color="#bbbbbb" align="right" css-class="responsive-text">
+          <b>Show de acrobacias:</b> Exhibiciones en vivo de pilotos profesionales.<br />
+          <b>Zona test ride:</b> ¡Prueba los últimos modelos de moto!<br />
+          <b>Concurso de customización:</b> Participa con tu moto única y gana premios.
+        </mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image border-radius="3%" alt="Stand Feria" src="https://practicas.feriavalencia.com/wp-content/uploads/2025/05/img2_2ruedas1.jpg" padding="16px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Separadores -->
+    <mj-section padding="0px">
+      <mj-column>
+        <mj-divider border-color="#1c1c1c" border-width="2px" width="99%" padding="0px"></mj-divider>
+        <mj-divider border-color="#000000" border-width="2px"></mj-divider>
+      </mj-column>
+    </mj-section>
+
+    <!-- Ofertas exclusivas -->
+    <mj-section background-color="#111111">
+      <mj-column>
+        <mj-image border-radius="3%" alt="Moto deportiva" src="https://practicas.feriavalencia.com/wp-content/uploads/2025/05/img1_2ruedas1.jpg" padding="16px" />
+      </mj-column>
+      <mj-column>
+        <mj-text font-size="22px" color="#e50914" font-weight="bold" align="left" css-class="responsive-title">
+          <singleline>Ofertas Exclusivas</singleline>
+        </mj-text>
+        <mj-text font-size="14px" font-weight="300" padding="0px 25px" color="#bbbbbb" css-class="responsive-text">
+          <ul style="padding-left:18px;">
+            <li>10% de descuento en accesorios de primeras marcas.</li>
+            <li>Entrada gratuita el viernes con carnet joven.</li>
+            <li>Pack VIP con acceso al backstage y firma de pilotos.</li>
+          </ul>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Separadores -->
+    <mj-section padding="0px">
+      <mj-column>
+        <mj-divider border-color="#1c1c1c" border-width="2px" width="99%" padding="0px"></mj-divider>
+        <mj-divider border-color="#000000" border-width="2px"></mj-divider>
+      </mj-column>
+    </mj-section>
+
+    <!-- Redes sociales y contacto -->
+    <mj-section background-color="#111111">
+      <mj-column>
+        <mj-social font-size="14px" icon-size="32px" mode="horizontal" align="left" padding="16px 0">
+          <mj-social-element name="facebook" href="https://www.facebook.com/SalonComicValencia/" background-color="#3b5998">Facebook</mj-social-element>
+          <mj-social-element name="twitter" href="https://twitter.com/MODatUniSA" background-color="#1da1f2">Twitter</mj-social-element>
+          <mj-social-element name="instagram" href="https://www.instagram.com/saloncomicvalencia/" background-color="#e4405f">Instagram</mj-social-element>
+        </mj-social>
+
+        <mj-text font-size="12px" color="#bbbbbb">
+          Centro de ayuda <br>Privacidad<br>Condiciones<br>
+          <a href="mailto:info@feriadosruedas.com" style="color: #bbbbbb;">info@feriadosruedas.com</a>
+        </mj-text>
+
+        <mj-text font-size="12px" color="#bbbbbb">
+          Feria Dos Ruedas, S.L.<br />
+          Avenida Motorbike 12, 46035<br />
+          Valencia, España<br />
+          <a href="https://feriadosruedas.com" style="color: #bbbbbb;">feriadosruedas.com</a>
+        </mj-text>
+      </mj-column>
+
+      <mj-column>
+        <mj-text font-size="10px" color="#bbbbbb" align="right">
+          <multiline>Feria Muestras Valencia - 2025</multiline>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+          
+    <mj-section padding="0px">
+      <mj-column>
+        <mj-divider border-color="#1c1c1c" border-width="2px" width="99%" padding="0px"></mj-divider>
+        <mj-divider border-color="#000000" border-width="2px"></mj-divider>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA hacia formulario personalizado -->
+    <mj-section background-color="#141414" padding="20px 20px">
+      <mj-column>
+        <mj-text align="center" font-size="16px" color="#ffffff">
+          ¿Que te ha parecido la Newsletter?
+        </mj-text>
+        <mj-button align="center" href="https://docs.google.com/forms/d/e/1FAIpQLSf4uMmgoLM8caTjmTLXd6lZT83sCxk3FfjIaPdAvSkmaQOZkw/viewform?usp=header" background-color="#e50914" color="white" font-size="16px" border-radius="4px" css-class="cta-button">
+          Rellena el formulario
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+
+    <!-- Línea final decorativa -->
+    <mj-section padding="2px" background-color="#111111">
+      <mj-column width="100%">
+        <mj-divider border-color="#bbbbbb" border-style="double" border-width="4px" width="100%" padding="0px" />
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>
