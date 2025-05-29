@@ -18,7 +18,10 @@ async function init() {
     const client = await pool.connect();
     console.log('✅ Conectado a PostgreSQL');
 
-    // Crear tabla de templates
+    // ⚠️ Elimina la tabla de suscriptores para evitar duplicados
+    await client.query(`DROP TABLE IF EXISTS suscriptores;`);
+
+    // Crea las tablas
     await client.query(`
       CREATE TABLE IF NOT EXISTS templates (
         id SERIAL PRIMARY KEY,
@@ -27,9 +30,8 @@ async function init() {
       );
     `);
 
-    // Crear tabla de suscriptores sin la columna newsletter_enviado (esto solo crea la tabla si no existe)
     await client.query(`
-      CREATE TABLE IF NOT EXISTS suscriptores (
+      CREATE TABLE suscriptores (
         id SERIAL PRIMARY KEY,
         nombre VARCHAR(100),
         email VARCHAR(255) UNIQUE,
@@ -39,12 +41,7 @@ async function init() {
       );
     `);
 
-    // Agregar la columna newsletter_enviado si no existe (realiza la migración en tablas existentes)
-    await client.query(`
-      ALTER TABLE suscriptores 
-      ADD COLUMN IF NOT EXISTS newsletter_enviado BOOLEAN DEFAULT false;
-    `);
-
+    // Procesa cada template MJML
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
     const casos = entries.filter(e => e.isDirectory() && e.name.startsWith('Caso-'));
 
@@ -79,15 +76,7 @@ async function init() {
       }
     }
 
-    client.release();
-  } catch (err) {
-    console.error('❌ Error en inicialización:', err);
-  }
-}
-
-async function insertarSuscriptores() {
-  try {
-    const client = await pool.connect();
+    // Inserta suscriptores una vez creada la tabla
     await client.query(`
       INSERT INTO suscriptores (nombre, email, empresa, idioma, tiempo_respuesta) VALUES
         ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15'),
@@ -97,14 +86,15 @@ async function insertarSuscriptores() {
         ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
       ON CONFLICT (email) DO NOTHING;
     `);
-    client.release();
     console.log("✅ Suscriptores insertados correctamente");
+
+    client.release();
   } catch (err) {
-    console.error("❌ Error insertando suscriptores:", err);
+    console.error('❌ Error en inicialización:', err);
   }
 }
 
-init().then(() => insertarSuscriptores());
+init();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -135,18 +125,17 @@ app.listen(PORT, () => {
   console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
 });
 
-async function enviarTodo() {
-  try {
-    // Seleccionar solo los suscriptores que aún no han recibido la newsletter
-    const result = await pool.query(
-      'SELECT id, nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores WHERE newsletter_enviado = false'
-    );
-    const suscriptores = result.rows;
+let envioRealizado = false;
 
-    if (suscriptores.length === 0) {
-      console.log('ℹ️ No hay suscriptores nuevos para enviar.');
-      return;
-    }
+async function enviarTodo() {
+  if (envioRealizado) {
+    console.log('🚫 Envío ya realizado. Se omite ejecución duplicada.');
+    return;
+  }
+
+  try {
+    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
+    const suscriptores = result.rows;
 
     suscriptores.forEach(s => {
       if (s.tiempo_respuesta) {
@@ -157,19 +146,11 @@ async function enviarTodo() {
     });
 
     await enviarNewsletters(suscriptores);
-    console.log('✅ Newsletters enviadas');
-
-    // Marcar como enviados los suscriptores que ya recibieron la newsletter
-    const ids = suscriptores.map(s => s.id);
-    await pool.query(
-      'UPDATE suscriptores SET newsletter_enviado = true WHERE id = ANY($1::int[])',
-      [ids]
-    );
-    console.log('✅ Suscriptores actualizados como enviados');
+    envioRealizado = true;
   } catch (err) {
     console.error('❌ Error al enviar newsletters:', err);
   }
 }
 
-// Ejecutar el envío una sola vez tras 5 segundos
+// Enviar tras 5 segundos
 setTimeout(enviarTodo, 5000);
