@@ -87,3 +87,5 @@ Funcionalidades clave (`src/backend/index.js`):
 - 📁 Permitir subida de plantillas MJML desde el navegador.
 - 📬 Crear una página pública de suscripción conectada a PostgreSQL.
 - 🧪 Implementar pruebas automáticas para garantizar estabilidad.
+
+### Limite diario de envió de correos vía google con nodemailer a tener en cuenta!
