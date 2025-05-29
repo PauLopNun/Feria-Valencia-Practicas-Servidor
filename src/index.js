@@ -151,3 +151,4 @@ async function enviarTodo() {
   }
 }
 
+setTimeout(enviarTodo, 5000);
