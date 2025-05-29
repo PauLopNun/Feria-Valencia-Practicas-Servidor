@@ -107,3 +107,5 @@ Este proyecto me ha permitido aplicar el diseño responsive en un entorno profes
 
 **¡Gracias por visitar mi repositorio!**  
 Si tienes sugerencias o preguntas, no dudes en abrir un issue o contactarme.
+
+- version 1.0

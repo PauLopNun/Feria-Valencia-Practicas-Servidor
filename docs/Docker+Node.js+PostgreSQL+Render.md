@@ -89,3 +89,5 @@ Funcionalidades clave (`src/backend/index.js`):
 - 🧪 Implementar pruebas automáticas para garantizar estabilidad.
 
 ### Limite diario de envió de correos vía google con nodemailer a tener en cuenta!
+
+- version 1.0
