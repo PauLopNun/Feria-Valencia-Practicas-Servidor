@@ -1,4 +1,3 @@
-// index.js
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
@@ -19,6 +18,7 @@ async function init() {
     const client = await pool.connect();
     console.log('✅ Conectado a PostgreSQL');
 
+    // Crear tabla de templates
     await client.query(`
       CREATE TABLE IF NOT EXISTS templates (
         id SERIAL PRIMARY KEY,
@@ -27,6 +27,7 @@ async function init() {
       );
     `);
 
+    // Crear tabla de suscriptores con una columna para controlar el envío
     await client.query(`
       CREATE TABLE IF NOT EXISTS suscriptores (
         id SERIAL PRIMARY KEY,
@@ -34,7 +35,8 @@ async function init() {
         email VARCHAR(255) UNIQUE,
         empresa VARCHAR(255),
         idioma VARCHAR(10),
-        tiempo_respuesta DATE DEFAULT NULL
+        tiempo_respuesta DATE DEFAULT NULL,
+        newsletter_enviado BOOLEAN DEFAULT false
       );
     `);
 
@@ -130,8 +132,16 @@ app.listen(PORT, () => {
 
 async function enviarTodo() {
   try {
-    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
+    // Seleccionar solo los suscriptores que aún no han recibido la newsletter
+    const result = await pool.query(
+      'SELECT id, nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores WHERE newsletter_enviado = false'
+    );
     const suscriptores = result.rows;
+
+    if (suscriptores.length === 0) {
+      console.log('ℹ️ No hay suscriptores nuevos para enviar.');
+      return;
+    }
 
     suscriptores.forEach(s => {
       if (s.tiempo_respuesta) {
@@ -142,9 +152,19 @@ async function enviarTodo() {
     });
 
     await enviarNewsletters(suscriptores);
+    console.log('✅ Newsletters enviadas');
+
+    // Marcar como enviados los suscriptores que ya recibieron la newsletter
+    const ids = suscriptores.map(s => s.id);
+    await pool.query(
+      'UPDATE suscriptores SET newsletter_enviado = true WHERE id = ANY($1::int[])',
+      [ids]
+    );
+    console.log('✅ Suscriptores actualizados como enviados');
   } catch (err) {
     console.error('❌ Error al enviar newsletters:', err);
   }
 }
 
+// Ejecutar el envío una sola vez tras 5 segundos
 setTimeout(enviarTodo, 5000);
