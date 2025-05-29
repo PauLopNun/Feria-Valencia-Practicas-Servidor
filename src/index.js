@@ -83,13 +83,13 @@ async function insertarSuscriptores() {
     const client = await pool.connect();
     await client.query(`
       INSERT INTO suscriptores (nombre, email, empresa, idioma, tiempo_respuesta) VALUES
-        ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15'),
-        ('Elena', 'elenalablan@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
-        ('Roberto', 'robertomoramoreno3@gmail.com', 'UK Events', 'en', '2025-11-15'),
-        ('Moha', 'mohamed.shahin1703@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
-        ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
+        ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15')
       ON CONFLICT DO NOTHING;
     `);
+    //     ('Elena', 'elenalablan@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
+    //     ('Roberto', 'robertomoramoreno3@gmail.com', 'UK Events', 'en', '2025-11-15'),
+    //     ('Moha', 'mohamed.shahin1703@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
+    //     ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
     client.release();
     console.log("✅ Suscriptores insertados correctamente");
   } catch (err) {
