@@ -27,7 +27,7 @@ async function init() {
       );
     `);
 
-    // Crear tabla de suscriptores con una columna para controlar el envío
+    // Crear tabla de suscriptores sin la columna newsletter_enviado (esto solo crea la tabla si no existe)
     await client.query(`
       CREATE TABLE IF NOT EXISTS suscriptores (
         id SERIAL PRIMARY KEY,
@@ -35,9 +35,14 @@ async function init() {
         email VARCHAR(255) UNIQUE,
         empresa VARCHAR(255),
         idioma VARCHAR(10),
-        tiempo_respuesta DATE DEFAULT NULL,
-        newsletter_enviado BOOLEAN DEFAULT false
+        tiempo_respuesta DATE DEFAULT NULL
       );
+    `);
+
+    // Agregar la columna newsletter_enviado si no existe (realiza la migración en tablas existentes)
+    await client.query(`
+      ALTER TABLE suscriptores 
+      ADD COLUMN IF NOT EXISTS newsletter_enviado BOOLEAN DEFAULT false;
     `);
 
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
