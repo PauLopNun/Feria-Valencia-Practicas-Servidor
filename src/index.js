@@ -19,7 +19,6 @@ async function init() {
     const client = await pool.connect();
     console.log('✅ Conectado a PostgreSQL');
 
-    // Crear tablas
     await client.query(`
       CREATE TABLE IF NOT EXISTS templates (
         id SERIAL PRIMARY KEY,
@@ -32,28 +31,13 @@ async function init() {
       CREATE TABLE IF NOT EXISTS suscriptores (
         id SERIAL PRIMARY KEY,
         nombre VARCHAR(100),
-        email VARCHAR(255),
+        email VARCHAR(255) UNIQUE,
         empresa VARCHAR(255),
         idioma VARCHAR(10),
         tiempo_respuesta DATE DEFAULT NULL
       );
     `);
 
-    // Añadir restricción UNIQUE si no existe
-    await client.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (
-          SELECT 1
-          FROM pg_constraint
-          WHERE conname = 'unique_email'
-        ) THEN
-          ALTER TABLE suscriptores ADD CONSTRAINT unique_email UNIQUE(email);
-        END IF;
-      END$$;
-    `);
-
-    // Procesar templates
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
     const casos = entries.filter(e => e.isDirectory() && e.name.startsWith('Caso-'));
 
@@ -113,27 +97,8 @@ async function insertarSuscriptores() {
   }
 }
 
-async function enviarTodo() {
-  try {
-    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
-    const suscriptores = result.rows;
+init().then(() => insertarSuscriptores());
 
-    suscriptores.forEach(s => {
-      if (s.tiempo_respuesta) {
-        const fecha = new Date(s.tiempo_respuesta);
-        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', opciones);
-      }
-    });
-
-    console.log(`📨 Enviando newsletters a ${suscriptores.length} suscriptores...`);
-    await enviarNewsletters(suscriptores);
-  } catch (err) {
-    console.error('❌ Error al enviar newsletters:', err);
-  }
-}
-
-// Servidor Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'output')));
@@ -159,12 +124,27 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-// Arranque completo ordenado
-(async () => {
-  await init();
-  await insertarSuscriptores();
-  await enviarTodo(); // Se envían solo una vez con datos limpios
-  app.listen(PORT, () => {
-    console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
-  });
-})();
+app.listen(PORT, () => {
+  console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
+});
+
+async function enviarTodo() {
+  try {
+    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
+    const suscriptores = result.rows;
+
+    suscriptores.forEach(s => {
+      if (s.tiempo_respuesta) {
+        const fecha = new Date(s.tiempo_respuesta);
+        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', opciones);
+      }
+    });
+
+    await enviarNewsletters(suscriptores);
+  } catch (err) {
+    console.error('❌ Error al enviar newsletters:', err);
+  }
+}
+
+setTimeout(enviarTodo, 5000);
