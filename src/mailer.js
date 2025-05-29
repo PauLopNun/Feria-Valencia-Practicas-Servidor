@@ -33,7 +33,7 @@ async function enviarNewsletters(suscriptores) {
   console.log(`📨 Enviando newsletters a ${suscriptores.length} suscriptores...`);
 
   for (const suscriptor of suscriptores) {
-    const empresa = suscriptor.empresa ? suscriptor.empresa.trim() : '';
+    const empresa = suscriptor.empresa?.trim();
     const newsletterPath = newsletterMap[empresa];
 
     if (!newsletterPath || !fs.existsSync(newsletterPath)) {
