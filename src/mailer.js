@@ -3,7 +3,7 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 
 const newsletterMap = {
-  'Valencia Comics': path.join(__dirname, 'output', 'Caso-1', 'newsletter_salon_comic_valencia.html'),
+  'Valencia Comics': path.join(__dirname, 'output', 'Caso-1', 'Newsletter_salon_comic_valencia.html'),
   'UK Events': path.join(__dirname, 'output', 'Caso-2', 'Newsletter_Cevisama.html'),
   'Feria Joven': path.join(__dirname, 'output', 'Caso-3', 'Newsletter_Expojove.html'),
   'Feria Dos Ruedas': path.join(__dirname, 'output', 'Caso-4', 'Newsletter_Feria_2_Ruedas.html')
