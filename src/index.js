@@ -19,6 +19,7 @@ async function init() {
     const client = await pool.connect();
     console.log('✅ Conectado a PostgreSQL');
 
+    // Crear tablas
     await client.query(`
       CREATE TABLE IF NOT EXISTS templates (
         id SERIAL PRIMARY KEY,
@@ -38,6 +39,21 @@ async function init() {
       );
     `);
 
+    // Añadir restricción UNIQUE si no existe
+    await client.query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1
+          FROM pg_constraint
+          WHERE conname = 'unique_email'
+        ) THEN
+          ALTER TABLE suscriptores ADD CONSTRAINT unique_email UNIQUE(email);
+        END IF;
+      END$$;
+    `);
+
+    // Procesar templates
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
     const casos = entries.filter(e => e.isDirectory() && e.name.startsWith('Caso-'));
 
@@ -88,12 +104,8 @@ async function insertarSuscriptores() {
         ('Roberto', 'robertomoramoreno3@gmail.com', 'UK Events', 'en', '2025-11-15'),
         ('Moha', 'mohamed.shahin1703@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
         ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
-        ON CONFLICT DO NOTHING;
+      ON CONFLICT (email) DO NOTHING;
     `);
-    //     ('Elena', 'elenalablan@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
-    //     ('Roberto', 'robertomoramoreno3@gmail.com', 'UK Events', 'en', '2025-11-15'),
-    //     ('Moha', 'mohamed.shahin1703@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
-    //     ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
     client.release();
     console.log("✅ Suscriptores insertados correctamente");
   } catch (err) {
@@ -101,8 +113,27 @@ async function insertarSuscriptores() {
   }
 }
 
-init().then(() => insertarSuscriptores());
+async function enviarTodo() {
+  try {
+    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
+    const suscriptores = result.rows;
 
+    suscriptores.forEach(s => {
+      if (s.tiempo_respuesta) {
+        const fecha = new Date(s.tiempo_respuesta);
+        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', opciones);
+      }
+    });
+
+    console.log(`📨 Enviando newsletters a ${suscriptores.length} suscriptores...`);
+    await enviarNewsletters(suscriptores);
+  } catch (err) {
+    console.error('❌ Error al enviar newsletters:', err);
+  }
+}
+
+// Servidor Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'output')));
@@ -128,27 +159,12 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-app.listen(PORT, () => {
-  console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
-});
-
-async function enviarTodo() {
-  try {
-    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
-    const suscriptores = result.rows;
-
-    suscriptores.forEach(s => {
-      if (s.tiempo_respuesta) {
-        const fecha = new Date(s.tiempo_respuesta);
-        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', opciones);
-      }
-    });
-
-    await enviarNewsletters(suscriptores);
-  } catch (err) {
-    console.error('❌ Error al enviar newsletters:', err);
-  }
-}
-
-setTimeout(enviarTodo, 5000);
+// Arranque completo ordenado
+(async () => {
+  await init();
+  await insertarSuscriptores();
+  await enviarTodo(); // Se envían solo una vez con datos limpios
+  app.listen(PORT, () => {
+    console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
+  });
+})();
