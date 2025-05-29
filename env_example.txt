@@ -1,0 +1,10 @@
+# Base de datos (PostgreSQL en Render)
+PGHOST= enlace_host_render
+PGPORT= puerto_render
+PGDATABASE= basededatos_render
+PGUSER= usuario_render
+PGPASSWORD= passwd_render
+
+# Gmail (correo del remitente y contraseña de aplicación)
+GMAIL_USER=tu_mail@gmail.com
+GMAIL_PASS=tu_app_passwd

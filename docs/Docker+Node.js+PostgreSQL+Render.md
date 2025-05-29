@@ -61,7 +61,7 @@ Render se encarga de:
 
 ## 4. Lógica de la Aplicación
 
-Funcionalidades clave (`src/backend/index.js`):
+Funcionalidades clave (`src/index.js`):
 
 - 🔗 Conexión a PostgreSQL usando variables de entorno.
 - 🧠 Conversión de plantillas MJML a HTML.
