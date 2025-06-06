@@ -124,7 +124,7 @@ app.get('/', (req, res) => {
   html += '</ul>';
 
   // Galería de imágenes
-  const imagesDir = path.join(__dirname, '..', 'public', 'images');
+  const imagesDir = path.join(__dirname, 'public', 'images');
   if (fs.existsSync(imagesDir)) {
     const imagenes = fs.readdirSync(imagesDir).filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f));
     html += '<h2>🖼️ Imágenes disponibles</h2><ul style="display:flex; flex-wrap: wrap; gap: 10px;">';
