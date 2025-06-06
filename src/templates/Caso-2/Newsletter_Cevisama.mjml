@@ -63,9 +63,9 @@
     <mj-section padding="20px"></mj-section>
 
     <!-- HEADER: logotipo Cevisama -->
-    <mj-section background-color="#0F0F0F" padding="20px 0">
+    <mj-section padding="20px 0">
       <mj-column>
-        <mj-image src="https://www.itc.uji.es/wp-content/uploads/CEVISMA.jpg" width="200px" />
+        <mj-image src="http://localhost:3000/images/Cabecera-CEVISAMA.jpg" width="200px" />
       </mj-column>
     </mj-section>
 
@@ -83,8 +83,12 @@
     <mj-section background-color="#141414" padding="30px 0">
       <mj-column>
         <mj-text font-size="18px" font-weight="bold" color="#ffffff" align="center">
-          🌍 Un escaparate global para tu marca. <br/> 🚀 Una oportunidad para destacar.
+          🌍 Un escaparate global para tu marca. <br/> <br/> 
+          🚀 Una oportunidad para destacar.
         </mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image border-radius="10px" src="http://localhost:3000/images/CEVISMA.jpg" />
       </mj-column>
     </mj-section>
 
@@ -104,7 +108,7 @@
     <!-- IMAGEN ILUSTRATIVA con datos de participación -->
     <mj-section background-color="#1F1F1F" padding="20px">
       <mj-column width="95%">
-        <mj-image border-radius="6px" src="https://cevisama.feriavalencia.com/wp-content/uploads/2020/02/distribuidor-2.jpg" />
+        <mj-image border-radius="6px" src="http://localhost:3000/images/cevisama-feria-example.jpg" />
         <mj-text align="center" font-size="14px" color="#aaaaaa">
           Más de 90 países representados en la última edición.
         </mj-text>

@@ -72,12 +72,7 @@
     <!-- LOGO DEL EVENTO -->
     <mj-section padding="15px 0 0 0">
       <mj-column width="40%">
-        <mj-image
-          alt="Feature image"
-          align="center"
-          src="https://github.com/PauLopNun/Feria-Valencia-Practicas/blob/master/assets/images/logo_salon_comic.jpg?raw=true"
-          css-class="image-padding"
-        />
+          <mj-image src="http://localhost:3000/images/logo_salon_comic.png"/>
       </mj-column>
     </mj-section>
 
@@ -91,7 +86,7 @@
     </mj-section>
 
     <!-- SECCIÓN PRINCIPAL: Título y Divider -->
-    <mj-section background-color="#141414" padding="35px 0 0 0">
+    <mj-section background-color="#141414" padding="25px 0 0 0">
       <mj-column>
         <mj-text font-size="14px" line-height="22px" font-weight="bold" align="center" color="#bbbbbb">
           <span style="text-transform: uppercase;">
@@ -104,14 +99,8 @@
 
     <!-- SECCIÓN CON CARTEL DEL EVENTO -->
     <mj-section background-color="#141414">
-      <mj-column width="50%">
-        <mj-image
-          align="center"
-          alt="Cartel evento"
-          src="https://www.saloncomicvalencia.com/wp-content/uploads/2024/12/CARTEL_XIANNUSTUDIO_2025-1-724x1024.jpg"
-          css-class="image-padding"
-          fluid-on-mobile="true"
-        />
+      <mj-column padding= "20px" width="100%">
+        <mj-image src="http://localhost:3000/images/cartelprincialcomic.jpg"/>
       </mj-column>
     </mj-section>
 
@@ -139,7 +128,7 @@
 
       <!-- Columna de imagen decorativa -->
       <mj-column>
-        <mj-image alt="Feature image" src="https://github.com/PauLopNun/Feria-Valencia-Practicas/blob/master/assets/images/feria_valencia_banner.jpeg?raw=true" />
+        <mj-image src="http://localhost:3000/images/feria_valencia_banner.jpeg" />
       </mj-column>
     </mj-section>
 
@@ -155,7 +144,7 @@
     <mj-section background-color="#141414">
       <!-- Columna de imagen -->
       <mj-column>
-        <mj-image alt="Imagen promociones" src="https://github.com/PauLopNun/Feria-Valencia-Practicas/blob/master/assets/images/cabecera_salon_comic.jpg?raw=true" />
+        <mj-image src="http://localhost:3000/images/salon_comic_2.jpg" />
       </mj-column>
 
       <!-- Columna de texto -->

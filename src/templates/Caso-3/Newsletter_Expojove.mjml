@@ -56,7 +56,7 @@
     <!-- Logo de Expojove -->
     <mj-section padding="20px">
       <mj-column width="35%">
-        <mj-image src="https://www.expojove.com/wp-content/uploads/2022/11/logoexpo22.png" fluid-on-mobile="true" />
+        <mj-image src="http://localhost:3000/images/logoexpo.png" fluid-on-mobile="true" />
       </mj-column>
     </mj-section>
 
@@ -90,7 +90,7 @@
     <!-- Sección con imagen y lista de servicios -->
     <mj-section background-color="#ffffff" padding="20px">
       <mj-column width="40%">
-        <mj-image css-class="service-img" padding="5px" border-radius="2%" src="https://firagirona.com/wp-content/uploads/2024/12/Cartell-expojove-2025-scaled.gif" fluid-on-mobile="true" />
+        <mj-image css-class="service-img" padding="5px" border-radius="2%" src="http://localhost:3000/images/Cartell-expojove-2025-scaled.gif" fluid-on-mobile="true" />
       </mj-column>
       <mj-column>
         <mj-text align="center" font-size="18px" font-family="Georgia, serif" color="#ec008c">
@@ -133,7 +133,7 @@
     <!-- Imagen secundaria informativa -->
     <mj-section background-color="#ffffff" padding="40px">
       <mj-column width="100%">
-        <mj-image border-radius="2%" src="https://practicas.feriavalencia.com/wp-content/uploads/2025/05/newsexpo1.png" fluid-on-mobile="true" />
+        <mj-image border-radius="2%" src="http://localhost:3000/images/newsexpo1.png" fluid-on-mobile="true" />
       </mj-column>
     </mj-section>
 
