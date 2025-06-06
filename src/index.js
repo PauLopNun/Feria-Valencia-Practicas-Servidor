@@ -6,13 +6,19 @@ const { Pool } = require('pg');
 const express = require('express');
 const { enviarNewsletters } = require('./mailer');
 
-const baseDir = path.join(__dirname, 'templates');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
+const baseDir = path.join(__dirname, 'templates');
+const outputDir = path.join(__dirname, 'output');
+
+// 🛡️ PostgreSQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
+// 🧱 Inicializar DB y generar HTMLs
 async function init() {
   try {
     const client = await pool.connect();
@@ -55,10 +61,10 @@ async function init() {
           console.warn(`⚠️ Errores en MJML de ${file}:`, result.errors);
         }
 
-        const outputDir = path.join(__dirname, 'output', caso.name);
-        fs.mkdirSync(outputDir, { recursive: true });
+        const casoOutputDir = path.join(outputDir, caso.name);
+        fs.mkdirSync(casoOutputDir, { recursive: true });
 
-        const outputPath = path.join(outputDir, file.replace('.mjml', '.html'));
+        const outputPath = path.join(casoOutputDir, file.replace('.mjml', '.html'));
         fs.writeFileSync(outputPath, result.html);
         console.log(`✅ HTML generado: ${outputPath}`);
 
@@ -69,7 +75,7 @@ async function init() {
           ON CONFLICT (nombre) DO UPDATE SET contenido = EXCLUDED.contenido
         `, [nombreTemplate, result.html]);
 
-        console.log(`✅ HTML de ${file} guardado en PostgreSQL`);
+        console.log(`✅ Guardado en DB: ${nombreTemplate}`);
       }
     }
 
@@ -82,46 +88,42 @@ async function init() {
         ('Ruben', 'rubenramirezcatalu@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
       ON CONFLICT (email) DO NOTHING;
     `);
-    console.log("✅ Suscriptores insertados correctamente");
 
+    console.log("✅ Suscriptores insertados");
     client.release();
   } catch (err) {
-    console.error('❌ Error en inicialización:', err);
+    console.error('❌ Error al iniciar:', err);
   }
 }
 
 init();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// 🔥 Servir HTMLs generados desde /output
+app.use('/', express.static(outputDir));
 
-// 🔥 Servir archivos HTML generados
-app.use(express.static(path.join(__dirname, 'output')));
-
-// ✅ Servir imágenes desde src/public/images → accesibles en /images
+// ✅ Servir imágenes desde public/images
 app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
 
-// 📄 Página principal: muestra links a los newsletters + galería de imágenes
+// 🌐 Página principal
 app.get('/', (req, res) => {
-  const outputBase = path.join(__dirname, 'output');
-  if (!fs.existsSync(outputBase)) {
+  if (!fs.existsSync(outputDir)) {
     return res.send('<h1>No hay newsletters generadas todavía.</h1>');
   }
 
-  const casos = fs.readdirSync(outputBase, { withFileTypes: true })
+  const casos = fs.readdirSync(outputDir, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
   let html = '<h1>📬 Newsletters generadas</h1><ul>';
   for (const caso of casos) {
-    const archivos = fs.readdirSync(path.join(outputBase, caso)).filter(f => f.endsWith('.html'));
+    const archivos = fs.readdirSync(path.join(outputDir, caso)).filter(f => f.endsWith('.html'));
     for (const archivo of archivos) {
-      html += `<li><a href="/${caso}/${archivo}" target="_blank">${caso}/${archivo}</a></li>`;
+      html += `<li><a href="${caso}/${archivo}" target="_blank">${caso}/${archivo}</a></li>`;
     }
   }
   html += '</ul>';
 
-  // 🖼️ Mostrar imágenes disponibles
+  // Galería de imágenes
   const imagesDir = path.join(__dirname, '..', 'public', 'images');
   if (fs.existsSync(imagesDir)) {
     const imagenes = fs.readdirSync(imagesDir).filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f));
@@ -136,34 +138,30 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`🌐 Servidor en http://localhost:${PORT} o Render`);
 });
 
-// 📤 Envío automático de newsletters
+// 📤 Envío automático
 let envioRealizado = false;
 
 async function enviarTodo() {
-  if (envioRealizado) {
-    console.log('🚫 Envío ya realizado. Se omite ejecución duplicada.');
-    return;
-  }
+  if (envioRealizado) return;
 
   try {
-    const result = await pool.query('SELECT nombre, email, empresa, idioma, tiempo_respuesta FROM suscriptores');
+    const result = await pool.query('SELECT * FROM suscriptores');
     const suscriptores = result.rows;
 
     suscriptores.forEach(s => {
       if (s.tiempo_respuesta) {
         const fecha = new Date(s.tiempo_respuesta);
-        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', opciones);
+        s.tiempo_respuesta = fecha.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
       }
     });
 
     await enviarNewsletters(suscriptores);
     envioRealizado = true;
   } catch (err) {
-    console.error('❌ Error al enviar newsletters:', err);
+    console.error('❌ Error enviando newsletters:', err);
   }
 }
 
