@@ -18,10 +18,8 @@ async function init() {
     const client = await pool.connect();
     console.log('✅ Conectado a PostgreSQL');
 
-    // ⚠️ Elimina la tabla de suscriptores para evitar duplicados
     await client.query(`DROP TABLE IF EXISTS suscriptores;`);
 
-    // Crea las tablas
     await client.query(`
       CREATE TABLE IF NOT EXISTS templates (
         id SERIAL PRIMARY KEY,
@@ -41,7 +39,6 @@ async function init() {
       );
     `);
 
-    // Procesa cada template MJML
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
     const casos = entries.filter(e => e.isDirectory() && e.name.startsWith('Caso-'));
 
@@ -76,7 +73,6 @@ async function init() {
       }
     }
 
-    // Inserta suscriptores una vez creada la tabla
     await client.query(`
       INSERT INTO suscriptores (nombre, email, empresa, idioma, tiempo_respuesta) VALUES
         ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15'),
@@ -98,7 +94,12 @@ init();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// 🔥 Servir archivos HTML
 app.use(express.static(path.join(__dirname, 'output')));
+
+// ✅ Servir imágenes desde /public/images → accesibles en /images/
+app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
 
 app.get('/', (req, res) => {
   const outputBase = path.join(__dirname, 'output');
@@ -152,5 +153,4 @@ async function enviarTodo() {
   }
 }
 
-// Enviar tras 5 segundos
 setTimeout(enviarTodo, 5000);
