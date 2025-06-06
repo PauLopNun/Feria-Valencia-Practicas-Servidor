@@ -102,7 +102,7 @@ init();
 app.use('/', express.static(outputDir));
 
 // ✅ Servir imágenes desde public/images
-app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
 // 🌐 Página principal
 app.get('/', (req, res) => {
