@@ -1,16 +1,21 @@
 <mjml>
   <mj-head>
-    <!-- Atributos globales para fuentes, padding, etc. -->
+    <!-- Atributos globales que afectan a todo el email -->
     <mj-attributes>
+      <!-- Fuente común para todo el contenido -->
       <mj-all font-family="Helvetica, Arial, sans-serif" />
+      <!-- Estilo base para textos -->
       <mj-text font-size="16px" line-height="150%" />
+      <!-- Sin padding por defecto en secciones y columnas -->
       <mj-section padding="0" />
       <mj-column padding="0" />
     </mj-attributes>
 
-    <!-- Estilos personalizados y media queries -->
+    <!-- Estilos en línea personalizados y media queries para responsive -->
     <mj-style inline="inline">
-      a { color: #bbbbbb; }
+      a { color: #bbbbbb; } <!-- Color de enlaces -->
+      
+      /* Botón con gradiente y estilos */
       .cta-button {
         background: linear-gradient(90deg, #0072CE, #DA0081);
         color: white;
@@ -21,6 +26,7 @@
         font-weight: bold;
       }
 
+      /* Estilos móviles */
       @media only screen and (max-width: 480px) {
         .cta-button {
           font-size: 14px !important;
@@ -40,6 +46,7 @@
         }
       }
 
+      /* Estilos para tablets */
       @media only screen and (min-width: 481px) and (max-width: 768px) {
         .cta-button {
           font-size: 15px !important;
@@ -50,6 +57,7 @@
         }
       }
 
+      /* Estilos para escritorio */
       @media only screen and (min-width: 769px) {
         .desktop-text {
           font-size: 16px !important;
@@ -59,43 +67,47 @@
   </mj-head>
 
   <mj-body background-color="#1A1A1A">
-    <!-- Espacio superior -->
+    <!-- Margen superior -->
     <mj-section padding="20px"></mj-section>
 
-    <!-- HEADER: logotipo Cevisama -->
+    <!-- Cabecera con logotipo de Cevisama -->
     <mj-section padding="20px 0">
       <mj-column>
-        <mj-image src="http://localhost:3000/images/Cabecera-CEVISAMA.jpg" width="200px" />
+        <mj-image src="https://feria-valencia-practicas-servidor.onrender.com/images/Cabecera-CEVISAMA.jpg" width="200px" />
       </mj-column>
     </mj-section>
 
-    <!-- INTRO: saludo personalizado y contexto -->
+    <!-- Introducción personalizada para el usuario -->
     <mj-section background-color="#1F1F1F" padding="40px 20px">
       <mj-column>
-        <mj-text align="center" font-size="22px" font-weight="bold" color="#ffffff">✨ ¡Cevisama 2025 te espera, {{nombre_contacto}}! ✨</mj-text>
+        <mj-text align="center" font-size="22px" font-weight="bold" color="#ffffff">
+          ✨ ¡Cevisama 2025 te espera, {{nombre_contacto}}! ✨
+        </mj-text>
         <mj-text color="#cccccc">
           Esta edición será más internacional, más innovadora y más estratégica para empresas como <strong>{{empresa}}</strong>. No te lo puedes perder.
         </mj-text>
       </mj-column>
     </mj-section>
 
-    <!-- FRASE DESTACADA en fondo oscuro -->
+    <!-- Frase destacada con imagen al lado -->
     <mj-section background-color="#141414" padding="30px 0">
       <mj-column>
         <mj-text font-size="18px" font-weight="bold" color="#ffffff" align="center">
-          🌍 Un escaparate global para tu marca. <br/> <br/> 
+          🌍 Un escaparate global para tu marca. <br/><br/>
           🚀 Una oportunidad para destacar.
         </mj-text>
       </mj-column>
       <mj-column>
-        <mj-image border-radius="10px" src="http://localhost:3000/images/CEVISMA.jpg" />
+        <mj-image border-radius="10px" src="https://feria-valencia-practicas-servidor.onrender.com/images/CEVISMA.jpg" />
       </mj-column>
     </mj-section>
 
-    <!-- BENEFICIOS de participar como expositor -->
+    <!-- Beneficios de participar como expositor -->
     <mj-section background-color="#1F1F1F" padding="30px 20px">
       <mj-column>
-        <mj-text font-size="18px" font-weight="bold" color="#ffffff">¿Por qué exponer en Cevisama 2025?</mj-text>
+        <mj-text font-size="18px" font-weight="bold" color="#ffffff">
+          ¿Por qué exponer en Cevisama 2025?
+        </mj-text>
         <mj-text color="#bbbbbb">
           ✅ Acceso a nuevos mercados y distribuidores internacionales.<br/>
           ✅ Promoción directa entre compradores clave.<br/>
@@ -105,17 +117,17 @@
       </mj-column>
     </mj-section>
 
-    <!-- IMAGEN ILUSTRATIVA con datos de participación -->
+    <!-- Imagen ilustrativa con dato clave -->
     <mj-section background-color="#1F1F1F" padding="20px">
       <mj-column width="95%">
-        <mj-image border-radius="6px" src="http://localhost:3000/images/cevisama-feria-example.jpg" />
+        <mj-image border-radius="6px" src="https://feria-valencia-practicas-servidor.onrender.com/images/cevisama-feria-example.jpg" />
         <mj-text align="center" font-size="14px" color="#aaaaaa">
           Más de 90 países representados en la última edición.
         </mj-text>
       </mj-column>
     </mj-section>
 
-    <!-- CTA PRINCIPAL para confirmar asistencia -->
+    <!-- Llamada a la acción principal -->
     <mj-section background-color="#0F0F0F" padding="30px 20px">
       <mj-column>
         <mj-text font-size="18px" font-weight="bold" color="#ffffff" align="center">
@@ -127,25 +139,26 @@
       </mj-column>
     </mj-section>
 
-    <!-- CTA hacia formulario personalizado -->
+    <!-- Segunda CTA: feedback con Google Forms -->
     <mj-section background-color="#141414" padding="20px 20px">
       <mj-column>
         <mj-text align="center" font-size="16px" color="#ffffff">
           ¿Que te ha parecido la Newsletter?
         </mj-text>
-          <mj-button align="center" href="https://docs.google.com/forms/d/e/1FAIpQLSf4uMmgoLM8caTjmTLXd6lZT83sCxk3FfjIaPdAvSkmaQOZkw/viewform?usp=header" background-color="#0072CE" color="white" font-size="16px" border-radius="4px">
-            Rellena el formulario
-          </mj-button>
+        <mj-button align="center" href="https://docs.google.com/forms/d/e/1FAIpQLSf4uMmgoLM8caTjmTLXd6lZT83sCxk3FfjIaPdAvSkmaQOZkw/viewform?usp=header" background-color="#0072CE" color="white" font-size="16px" border-radius="4px">
+          Rellena el formulario
+        </mj-button>
       </mj-column>
     </mj-section>
 
-    <!-- PIE DE PÁGINA: dirección y redes sociales -->
+    <!-- Pie de página con datos de contacto y redes -->
     <mj-section background-color="#1A1A1A" padding="30px 20px">
       <mj-column>
         <mj-text font-size="14px" color="#bbbbbb" align="center">
           Feria Valencia · Av. de les Fires, s/n · 46035 València, España<br/>
           Contacto: <a href="mailto:info@feriavalencia.com" style="color:#ffffff;">info@feriavalencia.com</a>
         </mj-text>
+        <!-- Redes sociales -->
         <mj-social font-size="14px" icon-size="20px" mode="horizontal" align="center">
           <mj-social-element name="linkedin" href="https://www.linkedin.com/company/feria-valencia/"></mj-social-element>
           <mj-social-element name="twitter" href="https://twitter.com/FeriaValencia"></mj-social-element>
@@ -153,7 +166,7 @@
       </mj-column>
     </mj-section>
 
-    <!-- LÍNEA FINAL de separación -->
+    <!-- Línea divisoria inferior -->
     <mj-section>
       <mj-column>
         <mj-divider border-color="#333333" border-width="1px" />

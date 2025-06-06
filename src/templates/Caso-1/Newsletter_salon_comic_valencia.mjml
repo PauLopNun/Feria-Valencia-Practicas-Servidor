@@ -72,7 +72,7 @@
     <!-- LOGO DEL EVENTO -->
     <mj-section padding="15px 0 0 0">
       <mj-column width="40%">
-          <mj-image src="http://localhost:3000/images/logo_salon_comic.png"/>
+        <mj-image src="https://feria-valencia-practicas-servidor.onrender.com/images/logo_salon_comic.png"/>
       </mj-column>
     </mj-section>
 
@@ -99,8 +99,8 @@
 
     <!-- SECCIÓN CON CARTEL DEL EVENTO -->
     <mj-section background-color="#141414">
-      <mj-column padding= "20px" width="100%">
-        <mj-image src="http://localhost:3000/images/cartelprincialcomic.jpg"/>
+      <mj-column padding="20px" width="100%">
+        <mj-image src="https://feria-valencia-practicas-servidor.onrender.com/images/cartelprincialcomic.jpg"/>
       </mj-column>
     </mj-section>
 
@@ -128,7 +128,7 @@
 
       <!-- Columna de imagen decorativa -->
       <mj-column>
-        <mj-image src="http://localhost:3000/images/feria_valencia_banner.jpeg" />
+        <mj-image src="https://feria-valencia-practicas-servidor.onrender.com/images/feria_valencia_banner.jpeg"/>
       </mj-column>
     </mj-section>
 
@@ -144,7 +144,7 @@
     <mj-section background-color="#141414">
       <!-- Columna de imagen -->
       <mj-column>
-        <mj-image src="http://localhost:3000/images/salon_comic_2.jpg" />
+        <mj-image src="https://feria-valencia-practicas-servidor.onrender.com/images/salon_comic_2.jpg"/>
       </mj-column>
 
       <!-- Columna de texto -->
@@ -171,16 +171,16 @@
     </mj-section>
 
     <!-- CTA hacia tu formulario personalizado -->
-      <mj-section background-color="#141414" padding="20px 20px">
-        <mj-column>
-          <mj-text align="center" font-size="16px" color="#ffffff">
-            ¿Que te ha parecido la Newsletter?
-          </mj-text>
-          <mj-button href="https://docs.google.com/forms/d/e/1FAIpQLSf4uMmgoLM8caTjmTLXd6lZT83sCxk3FfjIaPdAvSkmaQOZkw/viewform?usp=header" background-color="#DA0081" color="white" font-size="16px" border-radius="4px" css-class="cta-button">
-            Rellena el formulario
-          </mj-button>
-        </mj-column>
-      </mj-section>
+    <mj-section background-color="#141414" padding="20px 20px">
+      <mj-column>
+        <mj-text align="center" font-size="16px" color="#ffffff">
+          ¿Que te ha parecido la Newsletter?
+        </mj-text>
+        <mj-button href="https://docs.google.com/forms/d/e/1FAIpQLSf4uMmgoLM8caTjmTLXd6lZT83sCxk3FfjIaPdAvSkmaQOZkw/viewform?usp=header" background-color="#DA0081" color="white" font-size="16px" border-radius="4px" css-class="cta-button">
+          Rellena el formulario
+        </mj-button>
+      </mj-column>
+    </mj-section>
 
     <!-- PIE DE PÁGINA: REDES SOCIALES Y DATOS DE CONTACTO -->
     <mj-section padding="0px">
