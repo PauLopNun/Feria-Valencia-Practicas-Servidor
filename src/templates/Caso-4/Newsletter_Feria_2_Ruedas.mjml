@@ -47,7 +47,7 @@
     <!-- LOGO -->
     <mj-section>
       <mj-column>
-        <mj-image alt="Logo Feria Dos Ruedas" src=""https://feria-valencia-practicas-servidor.onrender.com/images/cropped-Logo_2RUEDAS_2022_150ppp-1.png" width="80px" padding="16px" />
+        <mj-image alt="Logo Feria Dos Ruedas" src="https://feria-valencia-practicas-servidor.onrender.com/images/cropped-Logo_2RUEDAS_2022_150ppp-1.png" width="80px" padding="16px" />
       </mj-column>
     </mj-section>
 
@@ -84,10 +84,10 @@
       <!-- Grupo de imágenes lado a lado -->
       <mj-group width="100%">
         <mj-column padding="15px" css-class="responsive-column">
-          <mj-image border-radius="3%" alt="Moto deportiva" src=""https://feria-valencia-practicas-servidor.onrender.com/images/img1_2ruedas1.jpg" padding="16px" />
+          <mj-image border-radius="3%" alt="Moto deportiva" src="https://feria-valencia-practicas-servidor.onrender.com/images/img1_2ruedas1.jpg" padding="16px" />
         </mj-column>
         <mj-column padding="15px" css-class="responsive-column">
-          <mj-image border-radius="3%" alt="Stand Feria" src=""https://feria-valencia-practicas-servidor.onrender.com/images/img2_2ruedas1.jpg" padding="16px" />
+          <mj-image border-radius="3%" alt="Stand Feria" src="https://feria-valencia-practicas-servidor.onrender.com/images/img2_2ruedas1.jpg" padding="16px" />
         </mj-column>
       </mj-group>
     </mj-section>
@@ -113,7 +113,7 @@
         </mj-text>
       </mj-column>
       <mj-column>
-        <mj-image border-radius="3%" alt="Stand Feria" src=""https://feria-valencia-practicas-servidor.onrender.com/images/feriadosruedas3.jpg" padding="16px" />
+        <mj-image border-radius="3%" alt="Stand Feria" src="https://feria-valencia-practicas-servidor.onrender.com/images/feriadosruedas3.jpg" padding="16px" />
       </mj-column>
     </mj-section>
 
@@ -128,7 +128,7 @@
     <!-- Ofertas exclusivas -->
     <mj-section background-color="#111111">
       <mj-column>
-        <mj-image border-radius="3%" alt="Moto deportiva" src=""https://feria-valencia-practicas-servidor.onrender.com/images/feriadosruedas4.jpg" padding="16px" />
+        <mj-image border-radius="3%" alt="Moto deportiva" src="https://feria-valencia-practicas-servidor.onrender.com/images/feriadosruedas4.jpg" padding="16px" />
       </mj-column>
       <mj-column>
         <mj-text font-size="22px" color="#e50914" font-weight="bold" align="left" css-class="responsive-title">
