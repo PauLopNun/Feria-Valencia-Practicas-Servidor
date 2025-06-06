@@ -95,12 +95,13 @@ init();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔥 Servir archivos HTML
+// 🔥 Servir archivos HTML generados
 app.use(express.static(path.join(__dirname, 'output')));
 
-// ✅ Servir imágenes desde /public/images → accesibles en /images/
+// ✅ Servir imágenes desde src/public/images → accesibles en /images
 app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
 
+// 📄 Página principal: muestra links a los newsletters + galería de imágenes
 app.get('/', (req, res) => {
   const outputBase = path.join(__dirname, 'output');
   if (!fs.existsSync(outputBase)) {
@@ -115,10 +116,22 @@ app.get('/', (req, res) => {
   for (const caso of casos) {
     const archivos = fs.readdirSync(path.join(outputBase, caso)).filter(f => f.endsWith('.html'));
     for (const archivo of archivos) {
-      html += `<li><a href="/${caso}/${archivo}">${caso}/${archivo}</a></li>`;
+      html += `<li><a href="/${caso}/${archivo}" target="_blank">${caso}/${archivo}</a></li>`;
     }
   }
   html += '</ul>';
+
+  // 🖼️ Mostrar imágenes disponibles
+  const imagesDir = path.join(__dirname, '..', 'public', 'images');
+  if (fs.existsSync(imagesDir)) {
+    const imagenes = fs.readdirSync(imagesDir).filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f));
+    html += '<h2>🖼️ Imágenes disponibles</h2><ul style="display:flex; flex-wrap: wrap; gap: 10px;">';
+    for (const img of imagenes) {
+      html += `<li><img src="/images/${img}" alt="${img}" width="200" style="border-radius:8px;"></li>`;
+    }
+    html += '</ul>';
+  }
+
   res.send(html);
 });
 
@@ -126,6 +139,7 @@ app.listen(PORT, () => {
   console.log(`🌐 Servidor escuchando en http://localhost:${PORT}`);
 });
 
+// 📤 Envío automático de newsletters
 let envioRealizado = false;
 
 async function enviarTodo() {
