@@ -38,11 +38,17 @@ async function init() {
       CREATE TABLE suscriptores (
         id SERIAL PRIMARY KEY,
         nombre VARCHAR(100),
-        email VARCHAR(255) UNIQUE,
+        email VARCHAR(255),
         empresa VARCHAR(255),
         idioma VARCHAR(10),
         tiempo_respuesta DATE DEFAULT NULL
       );
+    `);
+
+    // ✅ Evita duplicados exactos (opcional)
+    await client.query(`
+      ALTER TABLE suscriptores
+      ADD CONSTRAINT unico_suscriptor UNIQUE (email, empresa);
     `);
 
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
@@ -84,8 +90,7 @@ async function init() {
         ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15'),
         ('Pau', 'paulopeznunez@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
         ('Pau', 'paulopeznunez@gmail.com', 'UK Events', 'en', '2025-11-15'),
-        ('Pau', 'paulopeznunez@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15')
-      ON CONFLICT (email) DO NOTHING;
+        ('Pau', 'paulopeznunez@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15');
     `);
 
     console.log("✅ Suscriptores insertados");
