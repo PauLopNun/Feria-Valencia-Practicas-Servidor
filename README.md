@@ -28,7 +28,7 @@ A lo largo de estas prácticas, he diseñado campañas de email marketing orient
 
 ## 🎯 Objetivo del Proyecto
 
-Diseñar boletines informativos realistas para eventos de **Feria Valencia**, automatizando el flujo de generación y envío con **MJML**, **Node.js**, y **PostgreSQL**, todo desplegado en **Render.com** con acceso público.
+Diseñar boletines informativos realistas para eventos de **Feria Valencia**, automatizando el flujo de generación y envío con **MJML**, **Node.js**, **Docker** y **PostgreSQL**, todo desplegado en **Render.com** con acceso público.
 
 ---
 
@@ -93,6 +93,8 @@ FERIA-VALENCIA-MJML/
 - **Nodemailer** → Envío automático de correos  
 - **Render.com** → Despliegue en la nube  
 - **GitHub** → Control de versiones
+- **Docker** → Entorno de desarrollo reproducible  
+- **Outlook / Mailjet** → Testing de compatibilidad real
 
 ---
 
