@@ -68,8 +68,6 @@ Colores base para todas las campañas, adaptados a cada evento:
 FERIA-VALENCIA-MJML/
 ├── assets/
 ├── data/
-├── database/
-│   └── init.sql
 ├── docs/
 ├── src/
 │   ├── index.js
