@@ -88,7 +88,7 @@ async function init() {
     await client.query(`
       INSERT INTO suscriptores (nombre, email, empresa, idioma, tiempo_respuesta) VALUES
         ('Pau', 'paulopeznunez@gmail.com', 'Valencia Comics', 'es', '2025-11-15'),
-        ('Pau', paulopeznunez@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
+        ('Pau', 'paulopeznunez@gmail.com', 'Feria Joven', 'es', '2025-11-15'),
         ('Pau', 'paulopeznunez@gmail.com', 'UK Events', 'en', '2025-11-15'),
         ('Pau', 'paulopeznunez@gmail.com', 'Feria Dos Ruedas', 'es', '2025-11-15');
     `);
